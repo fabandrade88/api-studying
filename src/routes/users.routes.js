@@ -1,12 +1,11 @@
 const{ Router } = require("express"); //importando
 
+const UserController = require("../controllers/UserController");
 const usersRoutes = Router();
 
-//metodo POST
-usersRoutes.post("/", (request, response)=> {
-  const {name, email, password} = request.body;
+const usersController = new UserController();
 
-  response.json({name, email, password} );
-});
+//metodo POST
+usersRoutes.post("/", usersController.create);
 
 module.exports = usersRoutes; //expor a routas para o server ver.
