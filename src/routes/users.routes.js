@@ -3,9 +3,14 @@ const{ Router } = require("express"); //importando
 const UserController = require("../controllers/UserController");
 const usersRoutes = Router();
 
+function myMiddleware(request, response, next){
+  console.log("vc passou pelo middleware")
+  next();
+}
+
 const usersController = new UserController();
 
 //metodo POST
-usersRoutes.post("/", usersController.create);
+usersRoutes.post("/", myMiddleware, usersController.create);
 
-module.exports = usersRoutes; //expor a routas para o server ver.
+module.exports = usersRoutes; //exportar a rotas para o server ver.

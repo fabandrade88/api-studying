@@ -1,3 +1,5 @@
+const AppError = require("../utils/appError");
+
 class UserController {
 /**
  * Metodos que podem estar dentro de um controller:
@@ -8,11 +10,15 @@ class UserController {
  * delete - DELETE para remover um registro.
  */
 
- create(request, response){
+create(request, response){
   const {name, email, password} = request.body;
 
-  response.json({name, email, password} );
- }
+  if(!name){
+    throw new AppError("Nome obrigatorio!");
+  }
+
+  response.status(201).json({name, email, password} );
+}
 
 };
 

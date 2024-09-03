@@ -1,3 +1,6 @@
+require("express-async-errors");
+const AppError = require("./utils/appError");
+
 const express = require("express"); //importando dados necessario
 
 const routes = require("./routes") //importando as rotas
@@ -5,6 +8,21 @@ const routes = require("./routes") //importando as rotas
 const app = express();
 app.use(express.json()); //para dizer que estamos utilizando JSON
 app.use(routes);
+app.use((error, request, response,next) =>{
+  if(error instanceof AppError){
+    return response.status(error.statusCode).json({
+      status: "error",
+      message: error.message
+    })
+  }
+
+  console.error(error);
+
+  return response.status(500).json({
+    status: "error",
+    message: error.message
+  })
+});
 
 //Criando a porta do servidor
 
