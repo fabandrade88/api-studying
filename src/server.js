@@ -1,4 +1,6 @@
 require("express-async-errors");
+
+const database = require("./database/sqlite");
 const AppError = require("./utils/appError");
 
 const express = require("express"); //importando dados necessario
@@ -7,7 +9,11 @@ const routes = require("./routes") //importando as rotas
 
 const app = express();
 app.use(express.json()); //para dizer que estamos utilizando JSON
+
 app.use(routes);
+
+database(); //executar o banco de dados
+
 app.use((error, request, response,next) =>{
   if(error instanceof AppError){
     return response.status(error.statusCode).json({
