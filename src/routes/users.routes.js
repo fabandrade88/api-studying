@@ -12,5 +12,6 @@ const usersController = new UserController();
 
 //metodo POST
 usersRoutes.post("/", myMiddleware, usersController.create);
+usersRoutes.put("/:id", usersController.update);
 
 module.exports = usersRoutes; //exportar a rotas para o server ver.
