@@ -51,8 +51,8 @@ async update (request, response) {
     throw new AppError("ESTE EMAIL JA ESTA EM USO");
   }
 
-  user.name = name;
-  user.email = email;
+  user.name = name ?? user.name;
+  user.email = email ?? user.email;
 
   if ( password && !old_password) {
     throw new AppError("Voce precisa informar a senha antiga para redefinir sua senha")
@@ -74,7 +74,7 @@ async update (request, response) {
     password = ?,
     update_at = DATETIME('now')
     WHERE id = ?`,
-    [user.name, user.email, user.password, new Date(), id]
+    [user.name, user.email, user.password, id]
   );
 
   return response.json();
