@@ -1,37 +1,32 @@
-require("express-async-errors");
+require('express-async-errors')
+const migrationsRun = require('./database/sqlite/migrations')
+const AppError = require('./utils/AppError')
 
-const migrationRun = require("./database/sqlite/migrations");
-const AppError = require("./utils/appError");
+const express = require('express')
+const routes = require('./routes')
 
-const express = require("express"); //importando dados necessario
+migrationsRun()
 
-const routes = require("./routes") //importando as rotas
+const app = express()
+app.use(express.json())
 
-migrationRun(); //executar o banco de dados
+app.use(routes)
 
-const app = express();
-app.use(express.json()); //para dizer que estamos utilizando JSON
-
-app.use(routes);
-
-app.use((error, request, response,next) => {
-  if(error instanceof AppError){
+app.use((error, request, response, next) => {
+  if (error instanceof AppError) {
     return response.status(error.statusCode).json({
-      status: "error",
+      status: 'error',
       message: error.message
     })
   }
 
-  console.error(error);
+  console.error(error)
 
   return response.status(500).json({
-    status: "error",
-    message: error.message
+    status: 'error',
+    message: 'Internal server error'
   })
-});
+})
 
-//Criando a porta do servidor
-
-const PORT = 3333;
-
-app.listen(PORT, ()=> console.log(`Server is running on PORT ${PORT}`));
+const PORT = 3333
+app.listen(PORT, () => console.log(`Server is running on Port ${PORT}`))

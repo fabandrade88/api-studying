@@ -1,8 +1,4 @@
-// Update with your config settings.
 
-/**
- * @type { Object.<string, import("knex").Knex.Config> }
- */
 module.exports = {
 
   development: {
@@ -24,7 +20,8 @@ module.exports = {
       max: 10
     },
     migrations: {
-      tableName: 'knex_migrations'
+      tableName: 'knex_migrations',
+      directory: './src/database/knex/migrations' 
     }
   },
 
@@ -40,8 +37,10 @@ module.exports = {
       max: 10
     },
     migrations: {
-      tableName: 'knex_migrations'
-    }
+      tableName: 'knex_migrations',
+      directory: './src/database/knex/migrations' 
+    },
+    useNullAsDefault: true
   }
 
 };

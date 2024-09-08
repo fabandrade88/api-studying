@@ -1,17 +1,13 @@
-const{ Router } = require("express"); //importando
+const { Router } = require('express')
 
-const UserController = require("../controllers/UserController");
-const usersRoutes = Router();
+const UsersController = require('../controllers/UsersController')
 
-function myMiddleware(request, response, next){
-  console.log("vc passou pelo middleware")
-  next();
-}
+const usersRoutes = Router()
 
-const usersController = new UserController();
+const usersController = new UsersController()
 
-//metodo POST
-usersRoutes.post("/", myMiddleware, usersController.create);
-usersRoutes.put("/:id", usersController.update);
+usersRoutes.post('/', usersController.create)
+usersRoutes.put('/:id', usersController.update)
 
-module.exports = usersRoutes; //exportar a rotas para o server ver.
+
+module.exports = usersRoutes
