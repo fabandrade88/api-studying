@@ -8,7 +8,7 @@ function myMiddleware(request, response, next){
   next();
 }
 
-const notesController = new UserController();
+const notesController = new NotesController();
 
 //metodo POST
 notesRoutes.post("/:user_id", myMiddleware, notesController.create);
